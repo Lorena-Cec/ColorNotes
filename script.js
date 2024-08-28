@@ -79,7 +79,6 @@ function displayNotes() {
 }
 
 function displayNote(id) {
-    console.log("hahfd");
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(note => note.id == id);
 
@@ -176,7 +175,7 @@ function updateNote(noteId){
 
         localStorage.setItem('notes', JSON.stringify(notes));
         
-        displayNote(id);
+        displayNote(noteId);
     }
 }
 
