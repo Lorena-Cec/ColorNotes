@@ -1,3 +1,5 @@
+
+
 function addNote() {
     const noteContainer = document.getElementById('note');
     const containerRight = document.getElementById('container-right');
@@ -206,29 +208,9 @@ function searchNotes() {
             <p>${note.title}</p>
             <p>${note.date}</p>
             `;
-            /*
-            let noteText = note.text;
-            let re = new RegExp(searchValue,"g"); 
-            let newText = noteText.replace(re, `<span class="highlight">${searchValue}</span>`);
-            listItem.innerHTML = `
-            <p>${newText}</p>
-            `;*/
             notesList.appendChild(listItem);
         }        
     });
-}
-function displayNoteSearch(id, searchValue) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const note = notes.find(note => note.id == id);
-
-    if (note) {
-        const noteText = note.text;
-        let re = new RegExp(searchValue,"g"); 
-        let newText = noteText.replace(re, `<span class="highlight">${searchValue}</span>`);
-
-        document.getElementById('note-title').value = note.title;
-        document.getElementById('note-text').value = newText;
-    }
 }
 
 function displayNoteSearch(id, searchValue) {
@@ -237,7 +219,21 @@ function displayNoteSearch(id, searchValue) {
 
     if (note) {
         const noteContainer = document.getElementById('note');
-        noteContainer.innerHTML = ''; 
+        const containerRight = document.getElementById('container-right');
+        containerRight.innerHTML = ''; 
+
+        const textTime = document.createElement('p');
+        textTime.className = 'note-time-display';
+        textTime.innerHTML = note.time; 
+        containerRight.appendChild(textTime);
+
+        containerRight.appendChild(noteContainer);
+        noteContainer.innerHTML = '';
+
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.id = "buttons";
+        containerRight.appendChild(buttonsContainer);
+        buttonsContainer.innerHTML = '';
 
         const titleElement = document.createElement('p');
         if(note.title== undefined || note.title=='' ){
@@ -260,6 +256,18 @@ function displayNoteSearch(id, searchValue) {
         textElement.innerHTML = newText; 
         textElement.className = 'note-text-display';
         noteContainer.appendChild(textElement);
+
+        const editButton = document.createElement('button');
+        editButton.classList = 'edit-button button';
+        editButton.addEventListener('click', () => editNote(note));
+        editButton.innerHTML = "Edit";
+        buttonsContainer.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.classList = 'delete-button button';
+        deleteButton.addEventListener('click', () => deleteNote(note.id));
+        deleteButton.innerHTML = "Delete";
+        buttonsContainer.appendChild(deleteButton);
     }
 }
 
