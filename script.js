@@ -7,7 +7,7 @@ function addNote() {
 
     const titleElement = document.createElement('input');
     titleElement.type = "text";
-    titleElement.name = "search-text"; 
+    titleElement.name = "title-text"; 
     titleElement.placeholder = "Title";
     titleElement.id = 'note-title';
     noteContainer.appendChild(titleElement);
@@ -16,7 +16,7 @@ function addNote() {
     noteContainer.appendChild(line);
 
     const textElement = document.createElement('textarea');
-    textElement.innerHTML = "Add your text here."; 
+    textElement.placeholder = "Add your text here."; 
     textElement.id = 'note-text';
     noteContainer.appendChild(textElement);
 
@@ -27,15 +27,7 @@ function addNote() {
     containerRight.appendChild(saveButton);
 }
 
-function closePopup() {
-    const noteContainer = document.getElementById("noteContainer");
-    if(noteContainer) {
-        noteContainer.remove();
-    }
-}
-
 function createNote() {
-    const noteContainer = document.getElementById('note');
     const titleText = document.getElementById('note-title').value;
     const noteText = document.getElementById('note-text').value;
 
@@ -87,13 +79,13 @@ function displayNotes() {
 }
 
 function displayNote(id) {
+    console.log("hahfd");
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(note => note.id == id);
 
     if (note) {
         const noteContainer = document.getElementById('note');
         const containerRight = document.getElementById('container-right');
-        const buttonsContainer = document.getElementById('buttons');
         containerRight.innerHTML = ''; 
 
         const textTime = document.createElement('p');
@@ -104,6 +96,8 @@ function displayNote(id) {
         containerRight.appendChild(noteContainer);
         noteContainer.innerHTML = '';
 
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.id = "buttons";
         containerRight.appendChild(buttonsContainer);
         buttonsContainer.innerHTML = '';
 
@@ -127,18 +121,64 @@ function displayNote(id) {
 
         const editButton = document.createElement('button');
         editButton.classList = 'edit-button button';
-        editButton.addEventListener('click', () => editNote(note.id));
+        editButton.addEventListener('click', () => editNote(note));
         editButton.innerHTML = "Edit";
         buttonsContainer.appendChild(editButton);
 
         const deleteButton = document.createElement('button');
         deleteButton.classList = 'delete-button button';
-        deleteButton.addEventListener('click', () => editNote(note.id));
+        deleteButton.addEventListener('click', () => deleteNote(note.id));
         deleteButton.innerHTML = "Delete";
         buttonsContainer.appendChild(deleteButton);
     }
 }
 
+function editNote(note){
+    const noteContainer = document.getElementById('note');
+    const containerRight = document.getElementById('container-right');
+    containerRight.innerHTML = ''; 
+    containerRight.appendChild(noteContainer);
+    noteContainer.innerHTML = ''; 
+
+    const titleElement = document.createElement('input');
+    titleElement.type = "text";
+    titleElement.name = "title-text"; 
+    titleElement.value = note.title || "Title";
+    titleElement.id = 'note-title';
+    noteContainer.appendChild(titleElement);
+
+    const line = document.createElement('hr');
+    noteContainer.appendChild(line);
+
+    const textElement = document.createElement('textarea');
+    textElement.innerHTML = note.text || "Add text here.";
+    textElement.id = 'note-text';
+    noteContainer.appendChild(textElement);
+
+    const saveButton = document.createElement('button');
+    saveButton.classList = 'save-button button';
+    saveButton.addEventListener('click', () => updateNote(note.id));
+    saveButton.innerHTML = "Save";
+    containerRight.appendChild(saveButton);
+}
+
+
+function updateNote(noteId){
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    const note = notes.find(note => note.id == noteId);
+
+    if (note) {
+        const noteText = document.getElementById('note-text').value;
+        const noteTitle = document.getElementById('note-title').value;
+
+        note.title = noteTitle;
+        note.text = noteText;
+
+        localStorage.setItem('notes', JSON.stringify(notes));
+        
+        displayNote(id);
+    }
+}
 
 function deleteNote(noteId) {
     let notes = JSON.parse(localStorage.getItem('notes')) || [];
