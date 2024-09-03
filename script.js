@@ -11,6 +11,7 @@ function addNote() {
     titleElement.name = "title-text"; 
     titleElement.placeholder = "Title";
     titleElement.id = 'note-title';
+    titleElement.className = 'orange';
     noteContainer.appendChild(titleElement);
 
     const line = document.createElement('hr');
@@ -67,13 +68,11 @@ function displayNotes() {
     notesList.innerHTML = '';
 
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    console.log(notes);
     notes.sort(function(a, b) {
         var c = new Date(a.fullDate);
         var d = new Date(b.fullDate);
         return d-c;
     });
-    console.log(notes);
 
     notes.forEach(note => {
         const listItem = document.createElement('li');
@@ -153,6 +152,7 @@ function editNote(note){
     titleElement.name = "title-text"; 
     titleElement.value = note.title || "Title";
     titleElement.id = 'note-title';
+    titleElement.className = 'orange';
     noteContainer.appendChild(titleElement);
 
     const line = document.createElement('hr');
@@ -208,11 +208,18 @@ function deleteNote(noteId) {
 function searchNotes() {
     const notesList = document.getElementById('notes-list');
     const searchText = document.getElementById('search-text').value;
-    const searchValue = searchText.trim();
+    const searchButton = document.getElementById('btn-search');
+    const searchValue = searchText.toLowerCase().trim();
+    console.log(searchValue);
     notesList.innerHTML = '';
 
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    
+    notes.sort(function(a, b) {
+        var c = new Date(a.fullDate);
+        var d = new Date(b.fullDate);
+        return d-c;
+    });
+
     notes.forEach(note => {
         let result = note.text.includes(searchValue);
         if(result){
