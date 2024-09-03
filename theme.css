@@ -18,23 +18,23 @@ body.green{
     background-color: rgb(126,217,86,0.2);
 }
 
-#add-notes.orange:hover, #notes-list.orange>li {
+#add-notes.orange:hover, #notes-list.orange>li, .highlight.orange{
     background-color: rgb(244,197,151,1);
 }
 
-#add-notes.red:hover, #notes-list.red>li  {
+#add-notes.red:hover, #notes-list.red>li, .highlight.red {
     background-color: rgb(253,87,87,1);
 }
 
-#add-notes.blue:hover, #notes-list.blue>li  {
+#add-notes.blue:hover, #notes-list.blue>li, .highlight.blue {
     background-color: rgb(12,192,223,1);
 }
 
-#add-notes.green:hover, #notes-list.green>li  {
+#add-notes.green:hover, #notes-list.green>li, .highlight.green {
     background-color: rgb(126,217,86,1);
 }
 
-#add-notes.purple:hover, #notes-list.purple>li  {
+#add-notes.purple:hover, #notes-list.purple>li, .highlight.purple {
     background-color: rgb(202,108,230,1);
 }
 

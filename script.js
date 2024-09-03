@@ -272,7 +272,7 @@ function displayNoteSearch(id, searchValue) {
 
         const noteText = note.text;
         let re = new RegExp(searchValue,"g"); 
-        let newText = noteText.replace(re, `<span class="highlight">${searchValue}</span>`);
+        let newText = noteText.replace(re, `<span class="highlight orange">${searchValue}</span>`);
 
         const textElement = document.createElement('p');
         textElement.innerHTML = newText; 
