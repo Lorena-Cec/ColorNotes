@@ -15,9 +15,12 @@ body{
     padding: 0 30px;
     margin-top: 20px;
 }
+a{
+    width: 10%;
+}
 
 #logo{
-    width: 10%;
+    width: 100%;
     margin-bottom: 30px;
 }
 
