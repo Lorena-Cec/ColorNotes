@@ -1,5 +1,4 @@
-
-
+"use strict";
 function addNote() {
     const noteContainer = document.getElementById('note');
     const containerRight = document.getElementById('container-right');
@@ -44,6 +43,7 @@ function createNote() {
         id: new Date().getTime(),
         title: titleText,
         text: noteText,
+        fullDate: new Date().toISOString(),
         date: date.toLocaleDateString(),
         time:  time.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
         };
@@ -67,6 +67,13 @@ function displayNotes() {
     notesList.innerHTML = '';
 
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    console.log(notes);
+    notes.sort(function(a, b) {
+        var c = new Date(a.fullDate);
+        var d = new Date(b.fullDate);
+        return d-c;
+    });
+    console.log(notes);
 
     notes.forEach(note => {
         const listItem = document.createElement('li');
@@ -172,11 +179,18 @@ function updateNote(noteId){
         const noteText = document.getElementById('note-text').value;
         const noteTitle = document.getElementById('note-title').value;
 
+        var date = new Date();
+        var time = new Date();
+
         note.title = noteTitle;
         note.text = noteText;
+        note.fullDate = new Date().toISOString();
+        note.date = date.toLocaleDateString();
+        note.time = time.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 
         localStorage.setItem('notes', JSON.stringify(notes));
         
+        displayNotes();
         displayNote(noteId);
     }
 }
@@ -187,6 +201,7 @@ function deleteNote(noteId) {
 
     localStorage.setItem('notes', JSON.stringify(notes));
     displayNotes();
+    addNote();
 }
 
 
