@@ -11,11 +11,4 @@ function selectTheme(schema) {
     document.getElementById('btn-search').className = `fa-solid fa-search ${schema}`;  
     document.getElementById('add-notes').className = schema; 
     document.getElementById('notes-list').className = schema; 
-    let colors = document.querySelectorAll('.highlight');
-
-    colors.forEach(element => {
-        element.className = 'highlight';
-        element.classList.add(schema);
-    });
-    
 }

@@ -236,6 +236,7 @@ function searchNotes() {
 }
 
 function displayNoteSearch(id, searchValue) {
+
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     const note = notes.find(note => note.id == id);
 
@@ -266,13 +267,15 @@ function displayNoteSearch(id, searchValue) {
         }
         titleElement.className = 'note-title-display';
         noteContainer.appendChild(titleElement);
-        console.log(note.title)
         const line = document.createElement('hr');
         noteContainer.appendChild(line);
 
+        const activeSchema = document.querySelector('.selected').id;
+        selectTheme(activeSchema);
+
         const noteText = note.text;
         let re = new RegExp(searchValue,"g"); 
-        let newText = noteText.replace(re, `<span class="highlight orange">${searchValue}</span>`);
+        let newText = noteText.replace(re, `<span class="highlight ${activeSchema}">${searchValue}</span>`);
 
         const textElement = document.createElement('p');
         textElement.innerHTML = newText; 
